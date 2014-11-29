@@ -30,12 +30,29 @@ import utils01
 def add_daily_price(instrument, d1, d2, folder):
     print instrument.split('|')[0]
     date = utils01.jsonToYahooDate(d1['AsAtDateTime'][1:-1])
-    fp = open('%s/%s.csv' % (folder, instrument.split('|')[0]), 'r')
+    filename = '%s/%s.csv' % (folder, instrument.split('|')[0])
+    #--check if file actually exists
+    if os.path.exists(filename):
+        #--file exists
+        fp = open(filename, 'r')
+    else:
+        #--create file
+        fp = open(filename, 'w')
+        writer = csv.writer(fp)
+        writer.writerow( ('Date',
+                          'Open',
+                          'High',
+                          'Low',
+                          'Close',
+                          'Volume',
+                          'Adj Close') )
+        fp.close()
+        fp = open(filename, 'r')
     if date in fp.read():
         #--date already in file, do nothing
         fp.close()
         return False
-    fp = open('%s/%s.csv' % (folder, instrument.split('|')[0]), 'a')
+    fp = open(filename, 'a')
     writer = csv.writer(fp)
     writer.writerow((date,
                     '',

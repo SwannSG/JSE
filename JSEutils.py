@@ -53,6 +53,7 @@ def get_daily_highs_and_lows(masterID, headers, cookies):
                       data='{"instrumentMasterId":"%s"}' % masterID)
 
 def get_dividend_information(masterID, headers, cookies):
+    print '{"instrumentMasterId":"%s"}' % masterID
     return rq.request(method='POST',
                       url='https://www.jse.co.za/_vti_bin/JSE/McGregorService.svc/GetDividendInformation',
                       headers=headers,
